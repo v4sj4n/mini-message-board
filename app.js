@@ -13,7 +13,7 @@ app.set("view engine", "handlebars")
 app.set("views", "./views")
 
 Handlebars.registerHelper("formatDate", (date) => {
-   const formattedDate = moment(date).utcOffset("+04:00").format("YYYY-MM-DD HH:mm:ss"); 
+   const formattedDate = moment(date).utcOffset("+02:00").format("YYYY-MM-DD HH:mm:ss"); 
    return formattedDate
 })
 
