@@ -1,5 +1,6 @@
 const express = require("express")
 const exphbs = require("express-handlebars")
+const Handlebars = require("handlebars")
 const uuid = require("uuid")
 const db = require("./db")
 
@@ -9,6 +10,17 @@ const app = express()
 app.engine("handlebars", exphbs.engine())
 app.set("view engine", "handlebars")
 app.set("views", "./views")
+
+Handlebars.registerHelper("formatDate", (date) => {
+  const options = {
+    weekday: "long",
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  }
+  const formattedDate = new Date(date).toLocaleDateString("en-US", options)
+  return formattedDate
+})
 
 app.use(express.urlencoded({ extended: false }))
 

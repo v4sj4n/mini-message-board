@@ -1,3 +1,6 @@
+
+
+
 <h1 class="text-center mb-3">{{{title}}}</h1>
 <form action="/add-message" method="POST" class="mb-4">
     <div class="form-group">
@@ -15,6 +18,8 @@
 <h4>Messages</h4>
 <ul class="list-group">
     {{#each messages}}
-    <li class="list-group-item"><strong>{{this.name}}</strong>: {{this.message}} </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        
+        <span><strong>{{this.name}}</strong>: {{this.message}}</span> <span class="tbadge"> {{formatDate this.date}}</span></li>
     {{/each}}
 </ul>
