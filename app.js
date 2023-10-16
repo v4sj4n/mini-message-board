@@ -12,7 +12,6 @@ app.set("views", "./views")
 
 app.use(express.urlencoded({ extended: false }))
 
-
 /* GET home page. */
 app.get("/", async (req, res) => {
   try {
@@ -42,7 +41,7 @@ app.post("/add-message", (req, res) => {
 
   setTimeout(() => {
     res.redirect("/")
-  }, 2000)
+  }, 666)
 })
 
 module.exports = app
