@@ -1,6 +1,7 @@
 const express = require("express")
 const exphbs = require("express-handlebars")
 const uuid = require("uuid")
+const db = require("./db")
 
 const app = express()
 
@@ -11,35 +12,37 @@ app.set("views", "./views")
 
 app.use(express.urlencoded({ extended: false }))
 
-const messages = [
-  {
-    id: uuid.v4(),
-    name: "Vasjan",
-    message: "Hello",
-    date: new Date(),
-  },
-]
 
 /* GET home page. */
-app.get("/", (req, res) => {
-  res.render("index", { title: "Message Board", messages })
+app.get("/", async (req, res) => {
+  try {
+    const result = await db.query("SELECT * FROM messages")
+    const messages = result.rows
+
+    await res.render("index", { title: "Message Board", messages })
+  } catch (err) {
+    console.error(err)
+    return res.status(400).render("error", { title: "Message Board" })
+  }
 })
 
 /* POST request */
 app.post("/add-message", (req, res) => {
   const newMember = {
-    id: uuid.v4(),
     name: req.body.name,
     message: req.body.message,
-    date: new Date(),
   }
 
   if (!newMember.name || !newMember.message) {
     return res.status(400).render("error", { title: "Message Board" })
   }
 
-  messages.push(newMember)
-  res.redirect("/")
+  db.query(`INSERT INTO messages (name, message)
+      VALUES ('${newMember.name}', '${newMember.message}')`)
+
+  setTimeout(() => {
+    res.redirect("/")
+  }, 2000)
 })
 
 module.exports = app
