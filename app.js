@@ -1,8 +1,9 @@
 const express = require("express")
 const exphbs = require("express-handlebars")
 const Handlebars = require("handlebars")
-const uuid = require("uuid")
 const db = require("./db")
+const moment = require("moment")
+
 
 const app = express()
 
@@ -12,14 +13,8 @@ app.set("view engine", "handlebars")
 app.set("views", "./views")
 
 Handlebars.registerHelper("formatDate", (date) => {
-  const options = {
-    weekday: "long",
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  }
-  const formattedDate = new Date(date).toLocaleDateString("en-US", options)
-  return formattedDate
+   const formattedDate = moment(date).utcOffset("+04:00").format("YYYY-MM-DD HH:mm:ss"); 
+   return formattedDate
 })
 
 app.use(express.urlencoded({ extended: false }))
@@ -55,5 +50,7 @@ app.post("/add-message", (req, res) => {
     res.redirect("/")
   }, 666)
 })
+
+
 
 module.exports = app
