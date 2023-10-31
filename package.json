@@ -7,13 +7,14 @@
     "test": "nodemon ./bin/www"
   },
   "dependencies": {
+    "@handlebars/allow-prototype-access": "^1.0.5",
     "debug": "~2.6.9",
     "dotenv": "^16.3.1",
     "express": "~4.16.1",
     "express-handlebars": "^7.1.2",
     "http-errors": "~1.6.3",
     "moment": "^2.29.4",
-    "pg": "^8.11.3"
+    "mongoose": "^8.0.0"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"

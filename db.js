@@ -1,15 +1,17 @@
-const { Pool } = require("pg")
-require("dotenv").config()
+const mongoose = require('mongoose')
+require('dotenv').config()
 
-const pool = new Pool({
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  host: process.env.DB_HOST,
-  port: Number(process.env.DB_PORT),
-  database: process.env.DB_DATABASE,
-  ssl: true,
-})
+// You get it from your own cluster
+const MONGO_URI = process.env.MONGO_URI
 
-module.exports = {
-  query: (text) => pool.query(text),
-}
+// Enter your own db or remove the dbName option
+mongoose
+  .connect(MONGO_URI, {
+    dbName: 'MiniMessageBoard',
+  })
+  .then(() => {
+    console.log('Connected to MongoDB')
+  })
+  .catch((error) => {
+    console.error('Error connecting to MongoDB:', error)
+  })
